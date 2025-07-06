@@ -1,0 +1,92 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPpxiplryzG51zrhFLK44Y8",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Ashish11828/Laptop-battery-life-prediction/blob/main/Python%20file%20\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 9,
+      "metadata": {
+        "id": "sXRFgJlnSBX-"
+      },
+      "outputs": [],
+      "source": [
+        "import sys\n",
+        "import numpy as np\n",
+        "from sklearn.linear_model import LinearRegression\n",
+        "\n",
+        "# Replace this with actual training data (example of 100 entries)\n",
+        "raw_data = \"\"\"\n",
+        "0.0,0.0\n",
+        "0.1,0.2\n",
+        "0.2,0.4\n",
+        "0.3,0.6\n",
+        "0.4,0.8\n",
+        "0.5,1.0\n",
+        "0.6,1.2\n",
+        "0.7,1.4\n",
+        "0.8,1.6\n",
+        "0.9,1.8\n",
+        "1.0,2.0\n",
+        "1.1,2.2\n",
+        "1.2,2.4\n",
+        "1.3,2.6\n",
+        "1.4,2.8\n",
+        "1.5,3.0\n",
+        "1.6,3.2\n",
+        "1.7,3.4\n",
+        "1.8,3.6\n",
+        "1.9,3.8\n",
+        "2.0,4.0\n",
+        "\"\"\"  # This is just a sample. In real problems, you'd use all 100 lines.\n",
+        "\n",
+        "X = []\n",
+        "y = []\n",
+        "\n",
+        "for line in raw_data.strip().split('\\n'):\n",
+        "    try:\n",
+        "        charge, battery = map(float, line.strip().split(','))\n",
+        "        X.append([charge])\n",
+        "        y.append(battery)\n",
+        "    except:\n",
+        "        continue\n",
+        "\n",
+        "# Train the model\n",
+        "model = LinearRegression()\n",
+        "model.fit(X, y)\n",
+        "\n",
+        "# Read test input from stdin\n",
+        "for line in sys.stdin:\n",
+        "    try:\n",
+        "        val = float(line.strip())\n",
+        "        prediction = model.predict([[val]])[0]\n",
+        "        print(f\"{prediction:.2f}\")\n",
+        "    except:\n",
+        "        print(\"0.00\")  # fallback output\n"
+      ]
+    }
+  ]
+}
